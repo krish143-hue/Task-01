@@ -1,0 +1,55 @@
+import matplotlib.pyplot as plt
+
+# Define age ranges (start, end)
+age_ranges = [(0, 20), (21, 64), (65, 100)]  # age 100+ treated as 100
+population_mn = [22, 28, 10]
+labels_on_bars = [
+    "0–20 yrs\n512M\n36.1%",
+    "21–64 yrs\n807M\n57.0%",
+    "65+ yrs\n98M\n6.9%"
+]
+colors = ['yellow', 'deepskyblue', 'hotpink']
+
+plt.figure(figsize=(12,6))
+
+# Plot each bar as a rectangle over its age range
+for (start, end), pop, color, label in zip(age_ranges, population_mn, colors, labels_on_bars):
+    width = end - start
+    plt.bar(
+        x=start,         # left edge of the bar
+        height=pop,
+        width=width,
+        align='edge',
+        color=color,
+        edgecolor='black'
+    )
+    # Add text label inside bar
+    plt.text(
+        x=start + width/2,
+        y=pop/2,
+        s=label,
+        ha='center', va='center',
+        fontsize=10, fontweight='bold'
+    )
+
+# Median line
+plt.axvline(28, color='purple', linestyle='--', linewidth=2)
+plt.text(28, 25, "Median 28", ha='center', fontsize=10, fontweight='bold', color='purple')
+
+# Axis settings
+plt.xlim(0, 105)
+plt.xticks(range(0, 106, 5))
+plt.yticks([0, 5, 10, 15, 20, 25])
+
+# Axis labels
+plt.xlabel("Age Groups", fontsize=12, weight='bold')
+plt.ylabel("Population in Millions", fontsize=12, weight='bold')
+
+# Title and style
+plt.title("India’s Population distribution by Age in 2022", fontsize=14, weight='bold', pad=15)
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.grid(axis='y', linestyle='--', alpha=0.3)
+
+plt.tight_layout()
+plt.show()
